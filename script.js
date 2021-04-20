@@ -11,8 +11,8 @@ let createField = `<div><h2>Skapa konto</h2>
 <form action="/books/add" method="post">
 <div><input type="text" name="UserName"> Användarnamn </div> 
 <div><input type="password" name="password"> Lösenord </div> 
-<div><input type="email" name="newsletter">Epostadress</div>
-<div><input type="checkbox" name="newsletter">Ja, jag vill få nyhetsbrev</div>
+<div><input type="email" name="email">Epostadress</div>
+<div><input type="checkbox" name="subscribe">Ja, jag vill få nyhetsbrev</div>
 <div><button type="submit">spara</button></div></form></div>`
 
 root.insertAdjacentHTML("afterbegin", register);
