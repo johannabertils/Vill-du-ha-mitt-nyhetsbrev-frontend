@@ -101,7 +101,6 @@ function loggedInPage(userName, id) {
     localStorage.setItem('loggedin', "true");
     localStorage.setItem('loggedinuser', name);
 
-
     // See if user is subscribing to newsletter
     fetch("http://localhost:3010/users/login/user", {
         method: "post",
