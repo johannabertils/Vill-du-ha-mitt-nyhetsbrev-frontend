@@ -38,7 +38,7 @@ submitBtn.addEventListener("click", function () {
     };
     console.log(newUserInfo);
 
-    fetch("http://localhost:3010/users/new", {
+    fetch("https://nyhetsbrevjohanna.herokuapp.com/users/new", {
         method: "post",
         headers: {
             "content-Type": "application/json"
@@ -65,7 +65,7 @@ loginBtn.addEventListener("click", function () {
     console.log("click");
     console.log(userInfo);
 
-    fetch("http://localhost:3010/users/login", {
+    fetch("https://nyhetsbrevjohanna.herokuapp.com/users/login", {
         method: "post",
         headers: {
             "content-Type": "application/json"
@@ -102,7 +102,7 @@ function loggedInPage(userName, id) {
     localStorage.setItem('loggedinuser', id);
 
     // See if user is subscribing to newsletter
-    fetch("http://localhost:3010/users/login/user", {
+    fetch("https://nyhetsbrevjohanna.herokuapp.com/users/login/user", {
         method: "post",
         headers: {
             "content-Type": "application/json"
@@ -118,14 +118,14 @@ function loggedInPage(userName, id) {
     // Creates buttons for users to change their subscribe status
     function changeSubscribeStatus(data) {
         if (data === "true") {
-            console.log("Premumerarar");
+            console.log("Subscribes");
             root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="messageYes"><p> Du prenumererar på nyhetsbrevet! Vill du avsluta din prenumeration klicka här!</p><button id="stopSubscribing" type="button"> Avsluta prenumenation</button></div>`);
 
             // When user clicks on stop subscribing
             stopSubscribing.addEventListener("click", function () {
                 console.log("click");
                 let changedStatus = "false";
-                fetch("http://localhost:3010/users/changestatus", {
+                fetch("https://nyhetsbrevjohanna.herokuapp.com/users/changestatus", {
                     method: "post",
                     headers: {
                         "content-Type": "application/json"
@@ -138,8 +138,7 @@ function loggedInPage(userName, id) {
                     .then(function (data) {
                         console.log(data);
                         if (data === "Changed") {
-                            changeSubscribeStatus(data);
-                            console.log("JA");
+                            console.log("status changed");
                             root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="status"><p> Prenumationsstatusen är nu ändrad! !</p></div>`);
                             document.getElementById("messageYes").hidden = true;
                         }
@@ -147,14 +146,14 @@ function loggedInPage(userName, id) {
             });
         }
         if (data === "false") {
-            console.log("Premumerarar inte");
+            console.log("Does not subscribe");
             root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="messageNo"><p> Du prenumererar inte på nyhetsbrevet! Vill du prenumerera på nyhetsbrevet klicka på knappen nedanför!</p> <button id="startSubscribing" type="button"> Prenumerera här</button> </div>`);
 
             // When user clicks on start subscribing button
             startSubscribing.addEventListener("click", function () {
                 console.log("click");
                 let changedStatus = "true";
-                fetch("http://localhost:3010/users/changestatus", {
+                fetch("https://nyhetsbrevjohanna.herokuapp.com/users/changestatus", {
                     method: "post",
                     headers: {
                         "content-Type": "application/json"
@@ -167,8 +166,7 @@ function loggedInPage(userName, id) {
                     .then(function (data) {
                         console.log(data);
                         if (data === "Changed") {
-                            changeSubscribeStatus(data);
-                            console.log("JA");
+                            console.log("status changed");
                             root.insertAdjacentHTML(`afterend`, `<div  class="messageText" id="status"><p> Prenumationsstatusen är nu ändrad!</p></div>`);
                             document.getElementById("messageNo").hidden = true;
                         }

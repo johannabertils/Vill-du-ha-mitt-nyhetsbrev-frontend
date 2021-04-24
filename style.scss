@@ -1,23 +1,15 @@
-.root{
+.root {
     max-width: 800px;
     display: inline-block;
 }
 
-.header{
+.header {
     text-align: center;
     background: black;
     color: white;
 }
 
-.logIn{
-   width: 360px;
-    float: left;
-    height: 300px;
-    align-content: center;
-    margin-left: 40px;
-}
-
-.createField{
+.logIn {
     width: 360px;
     float: left;
     height: 300px;
@@ -25,13 +17,21 @@
     margin-left: 40px;
 }
 
-.messageText{
+.createField {
+    width: 360px;
+    float: left;
+    height: 300px;
+    align-content: center;
+    margin-left: 40px;
+}
+
+.messageText {
     width: 600px;
     color: black;
     text-align: center;
 }
 
-.logOutBtn{
+.logOutBtn {
     width: 600px;
     text-align: center;
 }
