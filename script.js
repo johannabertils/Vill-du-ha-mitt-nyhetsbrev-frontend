@@ -2,17 +2,20 @@
 
 let root = document.getElementById("root");
 
-let logOutBtn = `<button id="logOutBtn">Logga ut</button>`;
-root.insertAdjacentHTML("afterbegin", logOutBtn);
+let logOutBtn = `<div class="logOutBtn"><button id="logOutBtn">Logga ut</button></div>`;
+root.insertAdjacentHTML("afterend", logOutBtn);
 
 // Startpage
 let headerTemplate = `<div id="headerTemplate" class="header"><h1> Välkommen! </h1></div>`;
-let login = `<div id="loginText">Har du ett konto? Logga in här </div>`;
-let register = `<div id="registerText">Om inte, Registera dig här! </div>`;
 
-let inputField = `<div id="logIn" class="logIn"><input type="text" placeholder="Användarnamn" id="userName">
-                  <input type="password" placeholder="Lösenord" id="password"> <button id="loginBtn">Logga in</button></div></div></div>`;
-let createField = `<div id="createField"><h2>Skapa konto</h2>
+let inputField =
+    `<div id="logIn" class="logIn"><h2>Logga in</h2><p>Har du ett konto? Logga in här</p>
+<div><input type="text" placeholder="Användarnamn" id="userName"></div>
+<div> <input type="password" placeholder="Lösenord" id="password"> </div>
+<div><button id="loginBtn">Logga in</button></div>
+</div></div></div>`;
+let createField =
+    `<div id="createField" class="createField"><h2>Skapa konto</h2><p>Om inte, Registera dig här! </p>
 <div><input type="text" id="newUserName"> Användarnamn </div> 
 <div><input type="password" id="newPassword"> Lösenord </div> 
 <div><input type="email" id="email">Epostadress</div>
@@ -20,9 +23,7 @@ let createField = `<div id="createField"><h2>Skapa konto</h2>
 <div><button id="submitBtn" type="button">Skicka</button></div></div>`
 
 root.insertAdjacentHTML("afterbegin", createField);
-root.insertAdjacentHTML("afterbegin", register);
 root.insertAdjacentHTML("afterbegin", inputField);
-root.insertAdjacentHTML("afterbegin", login);
 root.insertAdjacentHTML("afterbegin", headerTemplate);
 document.getElementById("logOutBtn").hidden = true;
 
@@ -49,7 +50,7 @@ submitBtn.addEventListener("click", function () {
         .then(function (data) {
             console.log(data);
             if (data === "User created") {
-                root.insertAdjacentHTML(`afterend`, `<div><p> Användare skapad, du kan nu logga in!</p></div>`);
+                root.insertAdjacentHTML(`afterend`, `<div class="messageText"><p> Användare skapad, du kan nu logga in!</p></div>`);
             }
         })
 });
@@ -81,7 +82,7 @@ loginBtn.addEventListener("click", function () {
             }
             if (data === "error") {
                 console.log("Fel användarnamn eller lösenord");
-                root.insertAdjacentHTML(`afterend`, `<div id="errorMessage"><p> Fel användarnamn eller lösenord! Försök igen.</p></div>`);
+                root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="errorMessage"><p> Fel användarnamn eller lösenord! Försök igen.</p></div>`);
             }
         })
 });
@@ -90,16 +91,15 @@ loginBtn.addEventListener("click", function () {
 //  --------- Page that shows when logged in-----------------
 function loggedInPage(userName, id) {
     document.getElementById("createField").hidden = true;
-    document.getElementById("logIn").hidden = true;
     document.getElementById("headerTemplate").hidden = true;
-    document.getElementById("loginText").hidden = true;
-    document.getElementById("registerText").hidden = true;
+    document.getElementById("logIn").hidden = true;
     document.getElementById("logOutBtn").hidden = false;
+
     const name = userName;
     const idUser = id;
-    root.insertAdjacentHTML("afterend", "<p> Välkommen, Du är nu inloggad som " + name + "!</p>");
+    root.insertAdjacentHTML("afterbegin", "<div class='messageText'><h2>Välkommen, Du är nu inloggad som " + name + "!</h2></div>");
     localStorage.setItem('loggedin', "true");
-    localStorage.setItem('loggedinuser', name);
+    localStorage.setItem('loggedinuser', id);
 
     // See if user is subscribing to newsletter
     fetch("http://localhost:3010/users/login/user", {
@@ -119,7 +119,7 @@ function loggedInPage(userName, id) {
     function changeSubscribeStatus(data) {
         if (data === "true") {
             console.log("Premumerarar");
-            root.insertAdjacentHTML(`afterend`, `<div id="messageYes"><p> Du prenumererar på nyhetsbrevet! Vill du avsluta din prenumeration klicka här!</p><button id="stopSubscribing" type="button"> Avsluta prenumenation</button></div>`);
+            root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="messageYes"><p> Du prenumererar på nyhetsbrevet! Vill du avsluta din prenumeration klicka här!</p><button id="stopSubscribing" type="button"> Avsluta prenumenation</button></div>`);
 
             // When user clicks on stop subscribing
             stopSubscribing.addEventListener("click", function () {
@@ -140,13 +140,15 @@ function loggedInPage(userName, id) {
                         if (data === "Changed") {
                             changeSubscribeStatus(data);
                             console.log("JA");
+                            root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="status"><p> Prenumationsstatusen är nu ändrad! !</p></div>`);
+                            document.getElementById("messageYes").hidden = true;
                         }
                     })
             });
         }
         if (data === "false") {
             console.log("Premumerarar inte");
-            root.insertAdjacentHTML(`afterend`, `<div id="messageNo"><p> Du prenumererar inte på nyhetsbrevet! Vill du prenumerera på nyhetsbrevet klicka på knappen nedanför!</p> <button id="startSubscribing" type="button"> Prenumerera här</button> </div>`);
+            root.insertAdjacentHTML(`afterend`, `<div class="messageText" id="messageNo"><p> Du prenumererar inte på nyhetsbrevet! Vill du prenumerera på nyhetsbrevet klicka på knappen nedanför!</p> <button id="startSubscribing" type="button"> Prenumerera här</button> </div>`);
 
             // When user clicks on start subscribing button
             startSubscribing.addEventListener("click", function () {
@@ -167,6 +169,8 @@ function loggedInPage(userName, id) {
                         if (data === "Changed") {
                             changeSubscribeStatus(data);
                             console.log("JA");
+                            root.insertAdjacentHTML(`afterend`, `<div  class="messageText" id="status"><p> Prenumationsstatusen är nu ändrad!</p></div>`);
+                            document.getElementById("messageNo").hidden = true;
                         }
                     })
             });
