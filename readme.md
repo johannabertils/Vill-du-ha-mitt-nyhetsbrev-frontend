@@ -1,12 +1,15 @@
-##   Front end part of repository https://github.com/johannabertils/Vill-du-ha-mitt-nyhetsbrev-backend 
+##   Front end part of repository:
+ https://github.com/johannabertils/Vill-du-ha-mitt-nyhetsbrev-backend 
 
-#  Default users
+##  Default users
 
-```Admin
+Admin
+```
  Användarnamn: admin
  Lösenord: admin
 ```
-```Johanna
+Johanna
+```
  Användarnamn: johanna
  Lösenord: johanna
 ```
